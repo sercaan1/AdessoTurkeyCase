@@ -1,0 +1,94 @@
+@host = https://localhost:7175
+@contentType = application/json
+
+###
+# ============================================
+# KURA ÇEK - 8 GRUP
+# ============================================
+
+### 8 Grup ile kura çek
+POST {{host}}/api/draw
+Content-Type: {{contentType}}
+
+{
+  "drawerFirstName": "Sercan",
+  "drawerLastName": "Karakuyu",
+  "numberOfGroups": 8
+}
+
+###
+# ============================================
+# KURA ÇEK - 4 GRUP
+# ============================================
+
+### 4 Grup ile kura çek
+POST {{host}}/api/draw
+Content-Type: {{contentType}}
+
+{
+  "drawerFirstName": "Sercan",
+  "drawerLastName": "Karakuyu",
+  "numberOfGroups": 4
+}
+
+###
+# ============================================
+# HATA SENARYOLARI
+# ============================================
+
+### Geçersiz grup sayýsý (Hata: 400)
+POST {{host}}/api/draw
+Content-Type: {{contentType}}
+
+{
+  "drawerFirstName": "Test",
+  "drawerLastName": "User",
+  "numberOfGroups": 6
+}
+
+###
+
+### Boþ isim (Hata: 400 - FluentValidation)
+POST {{host}}/api/draw
+Content-Type: {{contentType}}
+
+{
+  "drawerFirstName": "",
+  "drawerLastName": "Test",
+  "numberOfGroups": 8
+}
+
+###
+
+### Çok uzun isim (Hata: 400 - FluentValidation)
+POST {{host}}/api/draw
+Content-Type: {{contentType}}
+
+{
+  "drawerFirstName": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa",
+  "drawerLastName": "Test",
+  "numberOfGroups": 8
+}
+
+###
+# ============================================
+# KURA LÝSTELE
+# ============================================
+
+### Tüm kuralarý listele
+GET {{host}}/api/draw
+
+###
+# ============================================
+# TEK KURA GETÝR
+# ============================================
+
+### ID ile kura getir (ID'yi önceki response'dan alýn)
+GET {{host}}/api/draw/1
+
+###
+
+### Olmayan kura (Hata: 404)
+GET {{host}}/api/draw/9999
+
+###
